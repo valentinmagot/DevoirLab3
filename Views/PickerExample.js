@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import { Button, SearchBar } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
 
-class PickerExample extends Component {
+class PickerExample extends React.Component {
    state = {
        city: undefined,
        meal: undefined,
@@ -54,8 +54,7 @@ class PickerExample extends Component {
       this.setState({ city: city })
    }
    render() {
-      return (
-        
+      return (   
         <View style={styles.overlay}>
         <View style={logo.logoContainer}>
           <Image style={{
@@ -132,6 +131,7 @@ class PickerExample extends Component {
                   buttonStyle={search.btn}
                   containerStyle={search.btn_container}
                   accessibilityLabel="Learn more about the restaurant"
+                  onPress={() => this.props.navigation.navigate('Restaurant')}
                   titleStyle={search.btn_title}
                 />
             </View>

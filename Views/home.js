@@ -1,16 +1,146 @@
 import React, { Component } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TextInput } from 'react-native'
+import { ImageBackground, View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import { Button, SearchBar } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
 import  PickerExample  from './PickerExample'
 
 class Home extends Component {
+    state = {
+      city: undefined,
+      meal: undefined,
+      search: undefined,
+  }
+
+  placeholder = {
+      label: 'Select a city...',
+      value: null,
+      color: '#9EA0A4',
+  };
+
+  citys = [
+  {
+      label: 'Select city...',
+      value: 'null',
+  },
+  {
+    label: 'Ottawa',
+    value: 'ottawa',
+  },
+  {
+    label: 'Gatineau',
+    value: 'gatineau',
+  },
+  ];
+
+  meals = [
+  {
+      label: 'Select meal...',
+      value: 'null',
+  },
+  {
+    label: 'Breakfast',
+    value: 'breakfast',
+  },
+  {
+    label: 'Lunch',
+    value: 'lunch',
+  },
+  {
+    label: 'Diner',
+    value: 'diner',
+  },
+  ];
+  updateCity = (city) => {
+    this.setState({ city: city })
+  }
    render() {
       return (
         <View>
         <ImageBackground source={require('../assets/clay-banks-1554997-unsplash.jpg')} style={styles.background}>
-        <PickerExample />
+        <View style={styles.overlay}>
+        <View style={logo.logoContainer}>
+          <Image style={{
+            width: 68,
+            height: 44,
+            resizeMode: 'contain',
+          }} 
+          source={require('../assets/uottawa_ver_black.png')} />
+        </View>
+          <View style={{
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'stretch',
+          // backgroundColor: 'red',
+          height: 251,
+          margin:36.25,
+        }}>
+          <View style={pickers.container} >
+            <View style={left_field.layout} >
+                <Text style={left_field.label}>City</Text>
+                <RNPickerSelect
+                      placeholder={{}}
+                      items={this.citys}
+                      onValueChange={value => {
+                          this.setState({
+                            city: value,
+                          });
+                      }}
+                      value={this.state.city}
+                      useNativeAndroidPickerStyle={false}
+                      style={pickerSelectStyles}
+                      Icon={() => {
+                          return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
+                      }}
+                      />
+              </View>
+              <View style={right_field.layout} >
+                    <Text style={right_field.label}>Meal</Text>
+                      <RNPickerSelect
+                            placeholder={{}}
+                            items={this.meals}
+                            onValueChange={value => {
+                                this.setState({
+                                  meal: value,
+                                });
+                            }}
+                            value={this.state.meal}
+                            useNativeAndroidPickerStyle={false}
+                            style={pickerSelectStyles}
+                            Icon={() => {
+                                return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
+                            }}
+                            />
+                    </View>
+                  </View>
+                  <View style={search.container} >
+                    <Text style={search.label}>Search</Text>
+                    <View>
+                    <SearchBar
+                    placeholder="Search..."
+                    containerStyle={search.searchContainer}
+                    inputContainerStyle={search.input}
+                    onChangeText= {value => {
+                      this.setState({ 
+                        search:value,
+                      });
+                    }}
+                    value={this.state.search}
+                  />
+                  <Button
+                    title="View Restaurants"
+                    color="black"
+                    raised
+                    buttonStyle={search.btn}
+                    containerStyle={search.btn_container}
+                    accessibilityLabel="Learn more about the restaurant"
+                    onPress={() => this.props.navigation.navigate('Restaurant')}
+                    titleStyle={search.btn_title}
+                  />
+              </View>
+            </View>
+          </View>
+        </View>
         </ImageBackground>
         </View>
       )
@@ -31,13 +161,23 @@ const styles = StyleSheet.create({
         opacity: 1.0,
     },
     overlay: {
-      width: '100%',
-      height: '100%',
+      flex:1,
       backgroundColor:'rgba(255,255,255,0.5)',
       alignItems: 'center',
       justifyContent: 'center',
     },
 
+});
+
+const logo = StyleSheet.create({
+  logoContainer:{
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    // backgroundColor: 'black',
+    width: 68,
+    height: 44,
+  },
 });
 
 const search = StyleSheet.create({

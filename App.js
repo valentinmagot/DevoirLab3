@@ -1,19 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './Views/home';
+import home from './Views/Home'
+import restaurant from './Views/Restaurant'
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-
-export default function App() {
-  return (
-    <Home/>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: home,
+    navigationOptions: {
+      title: 'Home',
+      header: null //this will hide the header
+    },
   },
+  Restaurant: {
+    screen: restaurant,
+    navigationOptions: {
+      title: 'Restaurant',
+      headerTintColor: 'black',
+      headerStyle: {
+         backgroundColor: '#F7B277'
+      }
+    }
+  },
+  
 });
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
