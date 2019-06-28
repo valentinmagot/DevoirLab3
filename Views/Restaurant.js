@@ -18,7 +18,7 @@ class MyListItem extends React.PureComponent {
       <TouchableOpacity style={list.container} onPress={this._onPress}>
         <View>
           <Text>{this.props.score}</Text>
-          <Text>{this.props.title}</Text>
+          <Text style={{fontWeight: 'bold'}} >{this.props.title}</Text>
           <Text>{this.props.location}</Text>
           <Text>{this.props.type}</Text>
           <Text>{this.props.price}</Text>
@@ -72,13 +72,19 @@ class Restaurant extends React.Component {
   _keyExtractor = (item, index) => item.id;
 
   _onPressItem = (id) => {
-    // updater functions are preferred for transactional updates
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id)); // toggle
-      return {selected};
-    });
+
+    const name = this.state.restaurant[id].name
+
+    this.state.selected = name;
+
+    this.props.navigation.navigate('Menu', {
+      city: this.state.city,
+      meal: this.state.meal,
+      restaurant: this.state.selected,
+      id: id,
+
+    })
+      
   };
 
 
@@ -97,7 +103,17 @@ _renderItem = ({item}) => (
   );
   
    render() {
+    const { navigation } = this.props;
+    const chosen_meal = navigation.getParam('meal', 'no meal selected in argument');
+    const chosen_city = navigation.getParam('city', 'no value in argument');
+
     console.disableYellowBox = true;
+    
+    this.state.city = chosen_city;
+    this.state.meal = chosen_meal;
+    // console.log(this.state.city);
+    // console.log(this.state.meal);
+
       return (
         <View>
         <ImageBackground source={require('../assets/clay-banks-1554997-unsplash.jpg')} style={styles.background}>

@@ -51,9 +51,7 @@ class Home extends Component {
     value: 'diner',
   },
   ];
-  updateCity = (city) => {
-    this.setState({ city: city })
-  }
+
    render() {
       return (
         <View>
@@ -85,6 +83,7 @@ class Home extends Component {
                           this.setState({
                             city: value,
                           });
+                          console.log(value);
                       }}
                       value={this.state.city}
                       useNativeAndroidPickerStyle={false}
@@ -103,6 +102,7 @@ class Home extends Component {
                                 this.setState({
                                   meal: value,
                                 });
+                                console.log(value);
                             }}
                             value={this.state.meal}
                             useNativeAndroidPickerStyle={false}
@@ -134,7 +134,10 @@ class Home extends Component {
                     buttonStyle={search.btn}
                     containerStyle={search.btn_container}
                     accessibilityLabel="Learn more about the restaurant"
-                    onPress={() => this.props.navigation.navigate('Restaurant')}
+                    onPress={() => this.props.navigation.navigate('Restaurant', {
+                      city: this.state.city,
+                      meal: this.state.meal,
+                    })}
                     titleStyle={search.btn_title}
                   />
               </View>
