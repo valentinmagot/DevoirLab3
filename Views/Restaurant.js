@@ -126,7 +126,7 @@ _renderItem = ({item}) => (
               ListHeaderComponent={this._header}
             />
             </View>
-            <FAB buttonColor="#F7B277" iconTextColor='black' onClickAction={() => {console.log("FAB pressed")}} visible={true} iconTextComponent={<Ionicons name="ios-card"/>} />
+            {/* <FAB buttonColor="#F7B277" iconTextColor='black' onClickAction={() => {console.log("FAB pressed")}} visible={true} iconTextComponent={<Ionicons name="ios-card"/>} /> */}
         </ImageBackground>
         </View>
       )
