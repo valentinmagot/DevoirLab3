@@ -113,7 +113,7 @@ class Menu extends React.Component {
                 {id: 5, name: "Double Skewers", meal:"lunch, diner", description: "Two skewers of marinated chicken tenders.", price: "11.85", img: null},
                 {id: 6, name: "Chicken Sandwich", meal:"lunch, diner", description: "Grilled chicken breast served with crispy leaf lettuce, tomato and PERinaise on a stone-baked Portuguese roll.", price: "11.25", img: null },
                 {id: 7, name: 'Chicken Wrap', meal:"lunch, diner", description: "Grilled chicken tenders with leaf lettuce, tomato, cucumber, sweet chilli jam and our tangy cilantro yogurt.", price: "11.25", img: null },
-                {id: 8, name: "Naughty Natas", meal:"lunch, diner", description: "Traditional Portuguese custard tart",  price: '2.65$',   img: null },
+                {id: 8, name: "Naughty Natas", meal:"lunch, diner", description: "Traditional Portuguese custard tart",  price: '2.65',   img: null },
                 {id: 9, name: "Nando's Kisses", meal:"lunch, diner", description: "Dark chocolate ice cream centered in milk chocolate ice cream, rolled in chocolate shavings",  price: "4.25",   img: null },
                 {id: 10,name: "Chocolate Cake", meal:"lunch, diner", description: "Dark chocolate cake and chocolate fudge nestled between layers of decadent chocolate icing.",  price: "6.25",   img: null },
             ]
@@ -165,7 +165,7 @@ class Menu extends React.Component {
   _onPressItem = (id) => {
 
 
-    console.log(id);
+    // console.log(id);
     this.state.selectedItem = id
     const itemCtr = this.state.itemCtr++;
     //   console.log(id);
@@ -175,27 +175,27 @@ class Menu extends React.Component {
     let item;
     let itemPrice;
     let totalPrice = parseFloat(this.state.total);
-    console.log(totalPrice);
-    console.log(itemId);
+    // console.log(totalPrice);
+    // console.log(itemId);
 
     if( itemId <= 2){
        item = this.state.restaurant[restaurantID].menu.all[id].name;
        itemPrice = this.state.restaurant[restaurantID].menu.all[id].price;
-       totalPrice += parseFloat(itemPrice);
-       this.state.order.push({id: itemCtr, itemId: id, name: item, price: itemPrice})
-      //  console.log(item);
+       totalPrice = (totalPrice + parseFloat(itemPrice)).toFixed(2);
+       this.state.order.push({ itemId: id, name: item, price: itemPrice})
+       console.log(totalPrice);
     }else if(itemId <= 7){
       item = this.state.restaurant[restaurantID].menu.all[id].name;
        itemPrice = this.state.restaurant[restaurantID].menu.all[id].price;
-       totalPrice += itemPrice;
-       this.state.order.push({id: itemCtr, itemId: id, name: item, price: itemPrice})
-      //  console.log(item);
+       totalPrice = (totalPrice + parseFloat(itemPrice)).toFixed(2);
+       this.state.order.push({ itemId: id, name: item, price: itemPrice})
+       console.log(totalPrice);
     }else if(itemId <= 13){
       item = this.state.restaurant[restaurantID].menu.all[id].name;
        itemPrice = this.state.restaurant[restaurantID].menu.all[id].price;
-       totalPrice += itemPrice;
-       this.state.order.push({id: itemCtr, itemId: id, name: item, price: itemPrice})
-      //  console.log(item);
+       totalPrice = (totalPrice + parseFloat(itemPrice)).toFixed(2);
+       this.state.order.push({ itemId: id, name: item, price: itemPrice})
+       console.log(totalPrice);
     }
 
     this.setState({
@@ -208,25 +208,54 @@ class Menu extends React.Component {
       
   };
 
-  _onPressItem2 = (id) => {
-    console.log(id);
+  _onPressItem2 = (itrmId) => {
+
+    let idToRemove;
+    // console.log(itrmId);
+    this.state.order.forEach(element => {
+      if(element.itemId === itrmId){
+        idToRemove = this.state.order.indexOf(element);
+        console.log(idToRemove);
+      }
+      
+    });
+    // console.log(this.state.order.indexOf(itrmId))
+    let itemPrice = 0;
+    let newTotal = 0;
+    // let itemid = 0;
+    // console.log(id);
+    // // console.log(itrmId);
+    // // console.log(this.state.order[id].indexOf(itrmId))
     
-    console.log(this.state.id);
 
+       itemPrice = this.state.order[idToRemove].price;
+       newTotal = (parseFloat(this.state.total) - parseFloat(itemPrice)).toFixed(2);
+ 
+
+  
+
+    if(newTotal < 0 ) {
+      newTotal = 0;
+    }
     
+    // console.log(newTotal);
 
-
-    this.state.order.splice( this.state.order.indexOf(id), 1)
+    this.state.order.splice( idToRemove, 1);
     this.state.itemCtr--;
+
+    
+
+    console.log(this.state.order.length);
 
     const orderItem = this.state.order;
     const ctr = this.state.itemCtr;
-    const total = this.state.total;
+
 
     this.setState({ 
       itemCtr: ctr,
       textValue: `View orders (${this.state.itemCtr})`,
       order: orderItem,
+      total: newTotal,
     })
 
     console.log(this.state.order);
