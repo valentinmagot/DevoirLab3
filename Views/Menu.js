@@ -17,7 +17,7 @@ class MyListItem extends React.PureComponent {
     return (
       <TouchableOpacity style={list.container} onPress={this._onPress}>
         <View>
-          <Text>{this.props.price}</Text>
+          <Text>{this.props.price}$</Text>
           <Text style={{fontWeight: 'bold'}}>{this.props.title}</Text>
           <Text>{this.props.description}</Text>
           <Text>{this.props.section}</Text>
@@ -47,7 +47,7 @@ class MyListItem2 extends React.PureComponent {
       <TouchableOpacity style={orderList.container} onPress={this._onPress}>
         <View>
           <Text style={{fontWeight: 'bold'}}>{this.props.title}</Text>
-          <Text>{this.props.price}</Text>
+          <Text>{this.props.price}$</Text>
         </View>
         <Ionicons size={30} name="ios-close" onPress={() => {
               this.setState({
@@ -343,14 +343,14 @@ class Menu extends React.Component {
                   paddingHorizontal: 0,
                 }}
               >
-                 <View style={{width: '100%', height: 45, backgroundColor: 'transparent',justifyContent: 'center', alignItems: 'center'}}>
-                  <Ionicons size={30} name="ios-arrow-down" onPress={() => {
-                      this.setState({
-                        isVisible: false,
-                      })
-                    }}
-                    />
-                </View>
+                 <TouchableOpacity style={{width: '100%', height: 45, backgroundColor: 'transparent',justifyContent: 'center', alignItems: 'center'}} onPress={ () => {
+                    console.log('tap')
+                    this.setState({
+                      isVisible: false,
+                    })
+                 }}>
+                  <Ionicons size={30} name="ios-arrow-down"/>
+                </TouchableOpacity>
                 <View style={hearder.header}>
                   <Text style={hearder.header_title}>Items</Text>
                 </View>
