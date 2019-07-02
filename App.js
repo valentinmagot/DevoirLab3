@@ -6,6 +6,8 @@ import confirm from './Views/Confirm'
 
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
+console.disableYellowBox = true;
+
 const MainNavigator = createStackNavigator({
   Home: {
     screen: home,

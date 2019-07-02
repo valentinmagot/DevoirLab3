@@ -3,7 +3,6 @@ import { ImageBackground, View, Text, StyleSheet, TextInput, Image } from 'react
 import { Button, SearchBar } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
-import  PickerExample  from './PickerExample'
 
 class Home extends Component {
     state = {
@@ -25,11 +24,11 @@ class Home extends Component {
   },
   {
     label: 'Ottawa',
-    value: 'ottawa',
+    value: 'Ottawa',
   },
   {
     label: 'Gatineau',
-    value: 'gatineau',
+    value: 'Gatineau',
   },
   ];
 

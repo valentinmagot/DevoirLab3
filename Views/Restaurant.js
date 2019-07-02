@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Image, FlatList, List, ListItem, TouchableOpacity } from 'react-native'
-import { Button, SearchBar } from 'react-native-elements'
-import RNPickerSelect from 'react-native-picker-select';
-import { Ionicons } from '@expo/vector-icons';
-import  PickerExample  from './PickerExample'
-import { ScrollView } from 'react-native-gesture-handler';
-import FAB from 'react-native-fab'
+
 
 class MyListItem extends React.PureComponent {
   _onPress = () => {
