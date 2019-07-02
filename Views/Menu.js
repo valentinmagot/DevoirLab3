@@ -372,7 +372,7 @@ class Menu extends React.Component {
                 />
                 <View style={orderList.subtotal}>
                   <Text style={orderList.subtotal_label}>Subtotal</Text>
-                  <Text style={orderList.subtotal_price}>{this.state.total}</Text>
+                  <Text style={orderList.subtotal_price}>{this.state.total}$</Text>
                 </View>
                 <Button
                     title='Checkout'
@@ -381,11 +381,16 @@ class Menu extends React.Component {
                     buttonStyle={button.btn}
                     containerStyle={button.btn_container}
                     accessibilityLabel="Learn more about the restaurant"
-                    onPress={() => {
-                      this.setState({
-                        isVisible: true,
-                      })
-                    }}
+                    onPress={() => 
+                        this.props.navigation.navigate('Confirm', {
+                          order: this.state.order,
+                          city: this.state.city,
+                          totalPrice: this.state.total,
+                        }) &&
+                        this.setState({
+                          isVisible: false,
+                        })
+                    }
                     titleStyle={button.btn_title}
                   />
             </Overlay>
