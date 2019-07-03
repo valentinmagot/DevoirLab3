@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Image, } from 'react-native'
-import { Button, } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -35,10 +35,11 @@ class Confirm extends React.Component {
         <View>
         <ImageBackground source={require('../assets/clay-banks-1554997-unsplash.jpg')} style={styles.background}>
             <View style={styles.overlay}>
-                <View style={{backgroundColor: 'white'}}>
-                    <View style={styles.header}>
+                <View style={styles.header}>
                         <Text style={styles.header_label}>Enter your informations</Text>
                     </View>
+                <View style={{backgroundColor: 'white', justifyContent:'space-evenly', height: '90%'}}>
+                        <View style= {address.container}>
                         <Text style={styles.part_header_label}>Address Information</Text>
                         <View style={address.fields}>
                             <Text style={address.TextInputLabel}>Apt</Text>
@@ -47,6 +48,7 @@ class Confirm extends React.Component {
                                     underlineColorAndroid='transparent'  
                                     style={address.TextAptInputStyle}  
                                     keyboardType={'numeric'}
+                                    returnKeyType='done'
                             /> 
                         </View>
                         <View style={address.fields}>
@@ -55,6 +57,7 @@ class Confirm extends React.Component {
                                     placeholder="Enter street name..."  
                                     underlineColorAndroid='transparent'  
                                     style={address.TextStreetInputStyle}  
+                                    returnKeyType='done'
                             /> 
                         </View>
                         <View style={address.fields}>
@@ -63,12 +66,15 @@ class Confirm extends React.Component {
                                     placeholder="Enter zip code..."  
                                     underlineColorAndroid='transparent'  
                                     style={address.TextZipInputStyle}  
+                                    returnKeyType='done'
                             /> 
                         </View>
                         <View style={address.fields}>
                             <Text style={address.TextInputLabel}>City</Text>
                             <Text>{this.state.city}</Text>
                         </View>
+                        </View>
+                        <View style= {payment.container}>
                         <Text style={styles.part_header_label}>Payment Information</Text>
                         <View style={payment.fields}>
                             <Text style={payment.TextInputLabel}>Credit Card</Text>
@@ -77,6 +83,7 @@ class Confirm extends React.Component {
                                     underlineColorAndroid='transparent'  
                                     style={payment.TextCCInputStyle}  
                                     keyboardType={'numeric'}
+                                    returnKeyType='done'
                             /> 
                         </View>
                         <View style={payment.fields}>
@@ -85,7 +92,8 @@ class Confirm extends React.Component {
                                     placeholder="###"  
                                     underlineColorAndroid='transparent'  
                                     style={payment.TextCVCInputStyle}
-                                    keyboardType={'numeric'}  
+                                    keyboardType={'numeric'} 
+                                    returnKeyType='done' 
                             /> 
                         </View>
                         <View style={payment.lastfields}>
@@ -95,16 +103,31 @@ class Confirm extends React.Component {
                                     placeholder="MM"  
                                     underlineColorAndroid='transparent'  
                                     style={payment.TextMMInputStyle}
-                                    keyboardType={'numeric'}  
+                                    keyboardType={'numeric'}
+                                    returnKeyType='done'  
                             /> 
                             <TextInput  
                                     placeholder="YYYY"  
                                     underlineColorAndroid='transparent'  
                                     style={payment.TextYYYYInputStyle}
-                                    keyboardType={'numeric'}  
+                                    keyboardType={'numeric'}
+                                    returnKeyType='done'  
                             /> 
                             </View>
                         </View>
+                    </View>
+                    <Button
+                        title='Order Up!'
+                        color="black"
+                        raised
+                        buttonStyle={button.btn}
+                        containerStyle={button.btn_container}
+                        accessibilityLabel="Learn more about the restaurant"
+                        onPress={() => 
+                            console.log('pressed')
+                        }
+                        titleStyle={button.btn_title}
+                    />
                     </View>
                     </View>
         </ImageBackground>
@@ -135,7 +158,7 @@ const styles = StyleSheet.create({
     },
     header: {
       width: '100%',
-      height: 60,
+      height: '10%',
       backgroundColor: '#F7B277',
       justifyContent:'center',
       borderWidth: 1,
@@ -159,16 +182,16 @@ const styles = StyleSheet.create({
 
 const payment = StyleSheet.create({
   container:{
-    height: '100%',
+    // height: '100%',
     width: '100%',
     flexDirection:'column',
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black',
+    // borderWidth: 1,
+    // borderColor: 'black',
     // justifyContent:'center',
     // alignItems: 'center',
     paddingHorizontal: 20,
-    // marginBottom: 30,
+    // marginBottom: 80,
   },
   fields: {
     width: '100%',
@@ -178,14 +201,16 @@ const payment = StyleSheet.create({
   },
   lastfields: {
     width: '100%',
+    // backgroundColor:'red',
     flexDirection: 'column',
-    justifyContent:'flex-start',
-    alignItems: 'flex-start',
+    justifyContent:'space-between',
+    alignItems: 'stretch',
   },
   TextInputLabel: {
     fontFamily: 'Helvetica',
     fontSize: 14,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   TextCCInputStyle: {  
         textAlign: 'center',  
@@ -208,7 +233,7 @@ const payment = StyleSheet.create({
     TextMMInputStyle: {  
         textAlign: 'center',  
         height: 40,
-        width: '50%',  
+        width: '40%',  
         borderRadius: 10,  
         borderWidth: 2,  
         borderColor: '#F7B277',  
@@ -217,7 +242,7 @@ const payment = StyleSheet.create({
     TextYYYYInputStyle: {  
         textAlign: 'center',  
         height: 40,
-        width: '50%',  
+        width: '40%',  
         borderRadius: 10,  
         borderWidth: 2,  
         borderColor: '#F7B277',  
@@ -225,18 +250,35 @@ const payment = StyleSheet.create({
     }
 });
 
+const button = StyleSheet.create({
+    btn_container: {
+      position: 'absolute',
+      bottom: 0,
+      borderWidth: 1, 
+      width: '100%',
+      height: 60,
+    },
+    btn:{
+      height: '100%',
+      backgroundColor:'#F7B277',
+    },
+    btn_title:{
+      color:'black'
+    },
+  });
+
 const address = StyleSheet.create({
     container:{
-      height: '100%',
+    //   height: '100%',
       width: '100%',
       flexDirection:'column',
       backgroundColor: 'white',
-      borderWidth: 1,
-      borderColor: 'black',
+    //   borderWidth: 1,
+    //   borderColor: 'black',
     //   justifyContent:'center',
     //   alignItems: 'center',
       paddingHorizontal: 20,
-      // marginBottom: 30,
+    //   marginBottom: 30,
     },
     fields: {
       width: '100%',
