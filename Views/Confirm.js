@@ -3,6 +3,9 @@ import { ImageBackground, View, Text, StyleSheet, TextInput, Image, } from 'reac
 import { Button } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from './Composants/Input'
+import RNPickerSelect from 'react-native-picker-select';
+import { Ionicons } from '@expo/vector-icons';
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 
 
@@ -18,16 +21,52 @@ class Confirm extends React.Component {
     isCCValid: null,
     isCVCValid: null,
     isMMValid: null,
-
+    mm: undefined,
+    yyyy: undefined,
   }
 
-  _validateZipCode = (zip) => {
-    
+  mounth = [
+      {label: 'Select mounth...',value: 'null'},
+      { label: 'JAN', value: 1},
+      { label: 'FEB', value: 2},
+      { label: 'MAR', value: 3},
+      { label: 'APR', value: 4},
+      { label: 'MAI', value: 5},
+      { label: 'JUN', value: 6},
+      { label: 'JUL', value: 7},
+      { label: 'AUG', value: 8},
+      { label: 'SEP', value: 9},
+      { label: 'OCT', value: 10},
+      { label: 'NOV', value: 11},
+      { label: 'DEC', value: 12},
+    ];
+
+    year = [
+      {label: 'Select year...', value: 'null'},
+      { label: '2020', value: 1},
+      { label: '2021', value: 2},
+      { label: '2022', value: 3},
+      { label: '2023', value: 4},
+      { label: '2024', value: 5},
+      { label: '2025', value: 6},
+      { label: '2026', value: 7},
+      { label: '2027', value: 8},
+      { label: '2028', value: 9},
+      { label: '2029', value: 10},
+      { label: '2030', value: 11},
+      { label: '2031', value: 12},
+    ];
+
+  _validateZipCode = () => {
+      if(this.state.isCCValid && this.state.isCVCValid && this.state.isZipValid){
+        console.log('Good!');
+      }else {
+        console.log("Not good!");
+      }
   };
   
    render() {
     const { isZipValid } = this.state;
-    const { isMMValid } = this.state;
     const { isCCValid } = this.state;
     const { isCVCValid } = this.state;
     const { navigation } = this.props;
@@ -51,7 +90,7 @@ class Confirm extends React.Component {
                 <View style={styles.header}>
                         <Text style={styles.header_label}>Enter your informations</Text>
                     </View>
-                <View style={{backgroundColor: 'white', height: '90%'}}>
+                <View style={{backgroundColor: 'white', height: '90%', justifyContent: 'space-evenly'}}>
                         <View style= {address.container}>
                         <Text style={styles.part_header_label}>Address Information</Text>
                         <View style={address.fields}>
@@ -62,6 +101,7 @@ class Confirm extends React.Component {
                                     style={address.TextAptInputStyle}  
                                     keyboardType={'numeric'}
                                     returnKeyType='done'
+                                    maxLength={3}
                             /> 
                         </View>
                         <View style={address.fields}>
@@ -71,6 +111,7 @@ class Confirm extends React.Component {
                                     underlineColorAndroid='transparent'  
                                     style={address.TextStreetInputStyle}  
                                     returnKeyType='done'
+                                    maxLength={30}
                             /> 
                         </View>
                         <View style={address.zipfield}>
@@ -86,6 +127,7 @@ class Confirm extends React.Component {
                                             '([ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ])\ ?([0-9][ABCEGHJKLMNPRSTVWXYZ][0-9])', // number required
                                         ]}
                                         onValidation={isZipValid => this.setState({ isZipValid })}
+                                        maxLength={7}
                                 />
                             </View>
                             <View style={{alignSelf: 'flex-start', marginBottom: 5, }}>
@@ -118,6 +160,7 @@ class Confirm extends React.Component {
                                             '([0-9])', // number required
                                         ]}
                                         onValidation={isCCValid => this.setState({ isCCValid })}
+                                        maxLength={16}
                                 />
                             </View>
                             <View style={{alignSelf: 'flex-start', marginBottom: 5, }}>
@@ -140,6 +183,7 @@ class Confirm extends React.Component {
                                             '([0-9])', // number required
                                         ]}
                                         onValidation={isCVCValid => this.setState({ isCVCValid })}
+                                        maxLength={3}
                                 />
                             </View>
                             <View style={{alignSelf: 'flex-start', marginBottom: 5, }}>
@@ -152,32 +196,34 @@ class Confirm extends React.Component {
                             <Text style={payment.TextInputLabel}>Expiration Date (MM/YYYY)</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'center'}} >
                                 <View style={{height: 40,width: '40%'}}>
-                                <Input  
-                                        placeholder="MM"  
-                                        underlineColorAndroid='transparent'  
-                                        style={payment.TextMMInputStyle}  
-                                        returnKeyType='done'
-                                        keyboardType={'numeric'}
-                                        pattern={[
-                                            '^.{2}$', // min 8 chars
-                                            '([1-9] [0-2])', // number required
-                                        ]}
-                                        onValidation={isMMValid => this.setState({ isMMValid })}
-                                /> 
-                                <View style={{alignSelf: 'flex-start', marginBottom: 5, }}>
-                                    <Text style={{ color: isMMValid && isMMValid[0] ? 'green' : 'red', fontSize:8}}>
-                                        Rule 1: 0-12
-                                    </Text>
-                                </View>
+                                <RNPickerSelect
+                                  placeholder={{}}
+                                  items={this.mounth}
+                                  onValueChange={value => {
+                                      console.log(value);
+                                  }}
+                                  value={this.state.mm}
+                                  useNativeAndroidPickerStyle={false}
+                                  style={pickerSelectStyles}
+                                  Icon={() => {
+                                      return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
+                                  }}
+                                  /> 
                                 </View>
                                 <View style={{height: 40,width: '40%',}}>
-                                <Input  
-                                    placeholder="YYYY"  
-                                    underlineColorAndroid='transparent'  
-                                    style={payment.TextYYYYInputStyle}
-                                    keyboardType={'numeric'}
-                                    returnKeyType='done'  
-                                /> 
+                                <RNPickerSelect
+                                  placeholder={{}}
+                                  items={this.year}
+                                  onValueChange={value => {
+                                      console.log(value);
+                                  }}
+                                  value={this.state.yyyy}
+                                  useNativeAndroidPickerStyle={false}
+                                  style={pickerSelectStyles}
+                                  Icon={() => {
+                                      return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
+                                  }}
+                                  /> 
                                 </View>
                             </View>
                         </View>
@@ -334,6 +380,26 @@ const button = StyleSheet.create({
       color:'black'
     },
   });
+
+  const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+      width:146,
+      height: 40,
+      fontSize: 11,
+      paddingHorizontal: 10,
+      borderWidth: 2,
+      borderColor: '#F7B277',
+      borderRadius: 11,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+      backgroundColor: 'white',
+
+    },
+    iconContainer: {
+        top: 8,
+        right: 10,
+      },
+});
 
 const address = StyleSheet.create({
     container:{
