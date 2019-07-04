@@ -149,6 +149,9 @@ class Confirm extends React.Component {
                                 <Text style={{ color: isZipValid && isZipValid[1] ? 'green' : 'red', fontSize:8 }}>
                                     Rule 2: Candian format (L#L#L#)
                                 </Text>
+                                <Text style={{ color: isZipValid && isZipValid[1] ? 'green' : 'red', fontSize:8 }}>
+                                    Rule 3: Uppercase chars
+                                </Text>
                                 </View>
                             </View>
                         <View style={address.fields}>
@@ -177,7 +180,7 @@ class Confirm extends React.Component {
                             </View>
                             <View style={{alignSelf: 'flex-start', marginBottom: 5, }}>
                                 <Text style={{ color: isCCValid && isCCValid[0] ? 'green' : 'red', fontSize:8}}>
-                                    Rule 1: Require 12 digits
+                                    Rule 1: Require 16 digits
                                 </Text>
                             </View>
                             </View>
