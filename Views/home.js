@@ -3,6 +3,7 @@ import { ImageBackground, View, Text, StyleSheet, TextInput, Image } from 'react
 import { Button, SearchBar } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 class Home extends Component {
     state = {
@@ -20,7 +21,7 @@ class Home extends Component {
   citys = [
   {
       label: 'Select city...',
-      value: 'null',
+      value: undefined,
   },
   {
     label: 'Ottawa',
@@ -35,7 +36,7 @@ class Home extends Component {
   meals = [
   {
       label: 'Select meal...',
-      value: 'null',
+      value: undefined,
   },
   {
     label: 'Breakfast',
@@ -98,6 +99,7 @@ class Home extends Component {
                             placeholder={{}}
                             items={this.meals}
                             onValueChange={value => {
+                              
                                 this.setState({
                                   meal: value,
                                 });
@@ -137,8 +139,29 @@ class Home extends Component {
                       city: this.state.city,
                       meal: this.state.meal,
                     })}
+                    onPress={ () => {
+                      console.log(this.state.city)
+                      if(this.state.city){
+                        this.props.navigation.navigate('Restaurant', {
+                          city: this.state.city,
+                          meal: this.state.meal,
+                        })
+                      }else {
+                        this.refs.toast.show('Please select a city');
+                      }        
+                  }}
                     titleStyle={search.btn_title}
                   />
+                  <Toast
+                    ref="toast"
+                    style={{backgroundColor:'#F7B277', width:'100%'}}
+                    position='top'
+                    positionValue={200}
+                    fadeInDuration={500}
+                    fadeOutDuration={750}
+                    opacity={0.7}
+                    textStyle={{color:'black', textAlign: 'center'}}
+                />
               </View>
             </View>
           </View>

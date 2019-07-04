@@ -9,33 +9,33 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 console.disableYellowBox = true;
 
 const MainNavigator = createStackNavigator({
-  // Home: {
-  //   screen: home,
-  //   navigationOptions: {
-  //     title: 'Home',
-  //     header: null //this will hide the header
-  //   },
-  // },
-  // Restaurant: {
-  //   screen: restaurant,
-  //   navigationOptions: {
-  //     title: 'Restaurant',
-  //     headerTintColor: 'black',
-  //     headerStyle: {
-  //        backgroundColor: '#F7B277'
-  //     }
-  //   }
-  // },
-  // Menu: {
-  //   screen: menu,
-  //   navigationOptions: {
-  //     title: 'Menu',
-  //     headerTintColor: 'black',
-  //     headerStyle: {
-  //        backgroundColor: '#F7B277'
-  //     }
-  //   }
-  // },
+  Home: {
+    screen: home,
+    navigationOptions: {
+      title: 'Home',
+      header: null //this will hide the header
+    },
+  },
+  Restaurant: {
+    screen: restaurant,
+    navigationOptions: {
+      title: 'Restaurant',
+      headerTintColor: 'black',
+      headerStyle: {
+         backgroundColor: '#F7B277'
+      }
+    }
+  },
+  Menu: {
+    screen: menu,
+    navigationOptions: {
+      title: 'Menu',
+      headerTintColor: 'black',
+      headerStyle: {
+         backgroundColor: '#F7B277'
+      }
+    }
+  },
   Confirm: {
     screen: confirm,
     navigationOptions: {

@@ -16,17 +16,16 @@ class Confirm extends React.Component {
     order: [],
     apt: undefined,
     street: undefined,
-    zipCode: undefined,
+    mm: undefined,
+    yyyy: undefined,
     isZipValid: null,
     isCCValid: null,
     isCVCValid: null,
-    isMMValid: null,
-    mm: undefined,
-    yyyy: undefined,
+
   }
 
   mounth = [
-      {label: 'Select mounth...',value: 'null'},
+      {label: 'Select mounth...',value: undefined},
       { label: 'JAN', value: 1},
       { label: 'FEB', value: 2},
       { label: 'MAR', value: 3},
@@ -42,7 +41,7 @@ class Confirm extends React.Component {
     ];
 
     year = [
-      {label: 'Select year...', value: 'null'},
+      {label: 'Select year...', value: undefined},
       { label: '2020', value: 1},
       { label: '2021', value: 2},
       { label: '2022', value: 3},
@@ -57,13 +56,24 @@ class Confirm extends React.Component {
       { label: '2031', value: 12},
     ];
 
-  _validateZipCode = () => {
-      if(this.state.isCCValid && this.state.isCVCValid && this.state.isZipValid){
-        console.log('Good!');
+  _validateAll= () => {
+      if(this.state.street && this.state.mm && this.state.yyyy && this.state.isCCValid && this.state.isCVCValid && this.state.isZipValid){
+
+        this.props.navigation.navigate('Home');
       }else {
-        console.log("Not good!");
+
+        this.refs.toast.show('Please follow all the required rules');
       }
+
   };
+
+  _Navigate = () => {
+    if (this.state.isAllValid == true) {
+      this.props.navigation.navigate('Home');
+    } else {
+      this.refs.toast.show('Please follow all the required rules');
+    }
+  }
   
    render() {
     const { isZipValid } = this.state;
@@ -102,6 +112,7 @@ class Confirm extends React.Component {
                                     keyboardType={'numeric'}
                                     returnKeyType='done'
                                     maxLength={3}
+                                    
                             /> 
                         </View>
                         <View style={address.fields}>
@@ -112,6 +123,7 @@ class Confirm extends React.Component {
                                     style={address.TextStreetInputStyle}  
                                     returnKeyType='done'
                                     maxLength={30}
+                                    onChange={street => this.setState({ street })}
                             /> 
                         </View>
                         <View style={address.zipfield}>
@@ -199,11 +211,14 @@ class Confirm extends React.Component {
                                 <RNPickerSelect
                                   placeholder={{}}
                                   items={this.mounth}
-                                  onValueChange={value => {
-                                      console.log(value);
-                                  }}
                                   value={this.state.mm}
                                   useNativeAndroidPickerStyle={false}
+                                  onValueChange={value => {
+                                    console.log(value);
+                                    this.setState({
+                                      mm: value,
+                                    })
+                                  }}
                                   style={pickerSelectStyles}
                                   Icon={() => {
                                       return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
@@ -214,11 +229,14 @@ class Confirm extends React.Component {
                                 <RNPickerSelect
                                   placeholder={{}}
                                   items={this.year}
-                                  onValueChange={value => {
-                                      console.log(value);
-                                  }}
                                   value={this.state.yyyy}
                                   useNativeAndroidPickerStyle={false}
+                                  onValueChange={value => {
+                                    console.log(value);
+                                    this.setState({
+                                      yyyy: value,
+                                    })
+                                  }}
                                   style={pickerSelectStyles}
                                   Icon={() => {
                                       return <Ionicons name="md-arrow-dropdown" size={24} color="black" />;
@@ -235,8 +253,18 @@ class Confirm extends React.Component {
                         buttonStyle={button.btn}
                         containerStyle={button.btn_container}
                         accessibilityLabel="Learn more about the restaurant"
-                        onPress={this._validateZipCode}
+                        onPress={this._validateAll}
                         titleStyle={button.btn_title}
+                    />
+                    <Toast
+                        ref="toast"
+                        style={{backgroundColor:'#F7B277', width:'100%'}}
+                        position='top'
+                        positionValue={200}
+                        fadeInDuration={500}
+                        fadeOutDuration={750}
+                        opacity={0.7}
+                        textStyle={{color:'black', textAlign: 'center'}}
                     />
                     </View>
                     </View>
